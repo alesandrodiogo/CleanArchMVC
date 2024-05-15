@@ -85,4 +85,15 @@ public class CategoriesController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    public async Task<IActionResult> Details(int? id)
+    {
+        if(id == null) NotFound();
+
+        var categoryDto = await _categoryService.GetById(id);
+
+        if (categoryDto == null) return NotFound();
+
+        return View(categoryDto);
+    }
 }
