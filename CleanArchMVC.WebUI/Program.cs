@@ -1,6 +1,8 @@
+using CleanArchMVC.Domain.Account;
 using CleanArchMVC.Infra.IoC;
+
 namespace CleanArchMVC.WebUI;
-using Microsoft.Extensions.DependencyInjection;
+
 
 public class Program
 {
@@ -27,6 +29,20 @@ public class Program
 
         app.UseRouting();
 
+        //Para referenciar a interface "ISeedUserRoleInitial", use o código abaixo que irá obter
+        // o serviço da interface por uma duração limitada.
+
+        using (var serviceScope = app.Services.CreateScope())
+        {
+            var services = serviceScope.ServiceProvider;
+
+            var seedUserRoleInitial = services.GetRequiredService<ISeedUserRoleInitial>();
+
+            seedUserRoleInitial.SeedRoles();
+            seedUserRoleInitial.SeedUsers();
+        }
+
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
