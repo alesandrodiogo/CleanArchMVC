@@ -1,12 +1,14 @@
 ﻿using CleanArchMVC.Application.DTOs;
 using CleanArchMVC.Application.Interfaces;
 using CleanArchMVC.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMVC.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProductsController : ControllerBase
 {
     private readonly IProductService _productService;
